@@ -12,6 +12,7 @@ import { Box } from '@mui/system';
 import DownloadIcon from '@mui/icons-material/Download';
 import { CardActions } from '@mui/material';
 import createTheme from '@mui/material/styles/createTheme';
+import Carousel, { CarouselItem } from '../components/Carousel';
 import axios from 'axios';
 
 const darkTheme = createTheme({
@@ -28,32 +29,44 @@ export default function RecipeReviewCard() {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            {/* {result && result.map(card => (
-                <Card sx={{ maxWidth: 345 }}>
-                    <CardMedia
-                        component="img"
-                        height="194"
-                        // image={data.results ? data.results[0].urls.full : null}
-                        image={card.urls.full}
-                        alt="Paella dish"
-                    />
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            {card.user.first_name} {card.user.last_name}
-                        </Typography>
-                        <IconButton aria-label="add to favorites" sx={{fontSize: '1.2rem'}}>
-                            <FavoriteIcon />{card.likes}
-                        </IconButton>
-                    </CardContent>
-                    <CardActions>
-                        <IconButton aria-label="share">
-                            <ShareIcon />
-                        </IconButton>
-                    </CardActions>
-                </Card>
-            ))} */}
+            <Carousel>
+                {result && result.map(card => (
+                    <CarouselItem>
+                        <Card sx={{ maxWidth: 345 }} elevation={20}>
+                            <CardMedia
+                                component="img"
+                                height="400"
+                                image={card ? card.urls.full : null}
+                                // image={card.urls.full}
+                                alt="Paella dish"
+                            />
+                            <CardContent sx={{ display: 'flex', position: 'relative', background: 'linear-gradient(rgba(220,220,220,0), rgba(0,0,0,0.9))', marginTop: '-5rem', color: 'white' }}>
+                                <Avatar sx={{ bgcolor: 'red', marginRight: '0.5rem' }} aria-label="recipe">
+                                    R
+                                </Avatar>
+                                <Box sx={{ marginBottom: '-2rem' }}>
+                                    <Typography variant="body2" >
+                                        {card && card.user.first_name} {card && card.user.last_name}
+                                    </Typography>
+                                    <FavoriteIcon fontSize='inherit' sx={{ marginTop: '0.1rem', position: 'relative' }} /> {card && card.likes}
+                                </Box>
+                                {/* <a href={card.urls.full} download="img.png">some link</a> */}
+                                {/* <IconButton aria-label="share" sx={{ marginLeft: 'auto' }} theme={darkTheme} onClick={()=>fetch(card.links.download+'&force=true')}> */}
+                                <IconButton aria-label="share" sx={{ marginLeft: 'auto' }} theme={darkTheme}>
+                                    <Link
+                                        href={card ? card.links.download + '&force=true' : null}
+                                        sx={{ textDecoration: 'none', color: 'white' }}
+                                    >
+                                        <DownloadIcon />
+                                    </Link>
+                                </IconButton>
+                            </CardContent>
+                        </Card>
+                    </CarouselItem>
+                ))}
+            </Carousel>
 
-            <Card sx={{ maxWidth: 345 }} elevation={20}>
+            {/* <Card sx={{ maxWidth: 345 }} elevation={20}>
                 <CardMedia
                     component="img"
                     height="400"
@@ -71,18 +84,18 @@ export default function RecipeReviewCard() {
                         </Typography>
                         <FavoriteIcon fontSize='inherit' sx={{ marginTop: '0.1rem', position: 'relative' }} /> {data.results && data.results[0].likes}
                     </Box>
-                    {/* <a href={data.results[0].urls.full} download="img.png">some link</a> */}
-                    {/* <IconButton aria-label="share" sx={{ marginLeft: 'auto' }} theme={darkTheme} onClick={()=>fetch(data.results[0].links.download+'&force=true')}> */}
+                    <a href={data.results[0].urls.full} download="img.png">some link</a>
+                    <IconButton aria-label="share" sx={{ marginLeft: 'auto' }} theme={darkTheme} onClick={()=>fetch(data.results[0].links.download+'&force=true')}>
                     <IconButton aria-label="share" sx={{ marginLeft: 'auto' }} theme={darkTheme}>
                         <Link
                             href={data.results ? data.results[0].links.download + '&force=true' : null}
-                            sx={{textDecoration: 'none', color: 'white'}}
+                            sx={{ textDecoration: 'none', color: 'white' }}
                         >
                             <DownloadIcon />
                         </Link>
                     </IconButton>
                 </CardContent>
-            </Card>
+            </Card> */}
         </Box>
     );
 }

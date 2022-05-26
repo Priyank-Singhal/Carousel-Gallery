@@ -6,6 +6,7 @@ import ShuffleTwoToneIcon from '@mui/icons-material/ShuffleTwoTone';
 import Card from '../components/Card'
 import axios from 'axios';
 import { ImageDataContext } from '../context/ImageDataContext';
+import Carousel, { CarouselItem } from '../components/Carousel';
 
 const theme = createTheme({
 });
@@ -29,7 +30,7 @@ const Gallery = () => {
 
     useEffect(() => {
         axios.get('https://api.unsplash.com/search/photos?page=1&query=' + topic + '&client_id=6i3h31X3KB7XH4qqwfurMmq5TKuSgWJcgOKyfBzs1_0')
-            .then(res => {  
+            .then(res => {
                 setData(res.data)
                 // console.log(res.data.results)
             })
@@ -39,7 +40,7 @@ const Gallery = () => {
     }, [topic])
 
     return (
-        <div>
+        <div className='gallery'>
             <ThemeProvider theme={theme}>
                 <Container component='main' maxWidth='md' sx={{ background: '' }}>
                     <CssBaseline />
@@ -68,9 +69,13 @@ const Gallery = () => {
                             display: 'flex'
                         }}
                     >
-                        <ImageDataContext.Provider value={{data}}>
-
-                            <Card />
+                        <ImageDataContext.Provider value={{ data }}>
+                            <Carousel>
+                                {/* <CarouselItem>Item 1</CarouselItem>
+                                <CarouselItem>Item 2</CarouselItem>
+                                <CarouselItem>Item 3</CarouselItem> */}
+                                <Card />
+                            </Carousel>
                         </ImageDataContext.Provider>
                     </Box>
                 </Container>
