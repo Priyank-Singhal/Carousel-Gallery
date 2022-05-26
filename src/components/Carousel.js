@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
+import Button from '@mui/material/Button';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import "../index.css";
 
@@ -17,10 +20,12 @@ const Carousel = ({ children }) => {
 
     const updateIndex = (newIndex) => {
         if (newIndex < 0) {
-            newIndex = React.Children.count(children) - 1;
-        } else if (newIndex >= React.Children.count(children)) {
+            newIndex = 5;
+        } else if (newIndex >= 6) {
             newIndex = 0;
         }
+        // console.log(React.Children.count(children))
+        // console.log(newIndex)
 
         setActiveIndex(newIndex);
     };
@@ -56,17 +61,16 @@ const Carousel = ({ children }) => {
                 style={{ transform: `translateX(-${activeIndex * 50}%)` }}
             >
                 {React.Children.map(children, (child, index) => {
-                    return React.cloneElement(child, { width: "50%" });
+                    return React.cloneElement(child, { width: "25vw" });
                 })}
             </div>
             <div className="indicators">
-                <button
+                <Button
                     onClick={() => {
                         updateIndex(activeIndex - 1);
-                    }}
-                >
-                    Prev
-                </button>
+                    }}>
+                    <ArrowBackIosIcon />
+                </Button>
                 {/* {React.Children.map(children, (child, index) => {
                     return (
                         <button
@@ -79,13 +83,12 @@ const Carousel = ({ children }) => {
                         </button>
                     );
                 })} */}
-                <button
+                <Button
                     onClick={() => {
                         updateIndex(activeIndex + 1);
-                    }}
-                >
-                    Next
-                </button>
+                    }}>
+                    <ArrowForwardIosIcon />
+                </Button>
             </div>
         </div>
     );

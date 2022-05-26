@@ -17,22 +17,26 @@ const Gallery = () => {
     const topics = ['coding', 'travel', 'nature', 'tech', 'water', 'forest', 'beach']
     const [topic, setTopic] = useState();
     const [data, setData] = useState({})
+    const [load, setLoad] = useState(true);
 
     const handleShuffle = () => {
+        setLoad(true)
         const rand = Math.floor(0 + Math.random() * (6 - 0))
         setTopic(prevVal => {
             if (topics[rand] === prevVal) return 'fruits'
             else return topics[rand]
         })
+        
         console.log(topic)
     }
 
-
+    
     useEffect(() => {
         axios.get('https://api.unsplash.com/search/photos?page=1&query=' + topic + '&client_id=6i3h31X3KB7XH4qqwfurMmq5TKuSgWJcgOKyfBzs1_0')
             .then(res => {
                 setData(res.data)
                 // console.log(res.data.results)
+                setTimeout(()=> setLoad(false), 1000);
             })
             .catch(err => {
                 console.log('Error: ', err.message)
@@ -42,7 +46,7 @@ const Gallery = () => {
     return (
         <div className='gallery'>
             <ThemeProvider theme={theme}>
-                <Container component='main' maxWidth='md' sx={{ background: '' }}>
+                <Container component='main' maxWidth='md' sx={{ background: '', marginLeft: '5%' }}>
                     <CssBaseline />
                     <Box
                         maxWidth='sm'
@@ -64,18 +68,19 @@ const Gallery = () => {
                     <Box
                         maxWidth='sm'
                         sx={{
-                            marginTop: '15%',
+                            marginTop: '10%',
                             background: '',
-                            display: 'flex'
+                            display: 'flex',
+                            flexDirection: 'row'
                         }}
                     >
-                        <ImageDataContext.Provider value={{ data }}>
-                            <Carousel>
-                                {/* <CarouselItem>Item 1</CarouselItem>
+                        <ImageDataContext.Provider value={{ data, load }}>
+                            {/* <Carousel> */}
+                            {/* <CarouselItem>Item 1</CarouselItem>
                                 <CarouselItem>Item 2</CarouselItem>
                                 <CarouselItem>Item 3</CarouselItem> */}
-                                <Card />
-                            </Carousel>
+                            {/* </Carousel> */}
+                            <Card />
                         </ImageDataContext.Provider>
                     </Box>
                 </Container>
