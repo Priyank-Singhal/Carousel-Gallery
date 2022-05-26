@@ -36,7 +36,6 @@ export default function RecipeReviewCard() {
                             load ?
                                 <Skeleton variant="rectangular" width={300} height={400} />
                                 :
-
                                 <Card sx={{ maxWidth: 345, minWidth: 200 }} elevation={20}>
                                     <CardMedia
                                         component="img"
@@ -45,17 +44,10 @@ export default function RecipeReviewCard() {
                                         // image={card.urls.full}
                                         alt="Paella dish"
                                     />
-                                    {/* <CardMedia
-                                        component="img"
-                                        height="400"
-                                        image={card ? card.urls.full : null}
-                                        // image={card.urls.full}
-                                        alt="Paella dish"
-                                    /> */}
                                     <CardContent sx={{ display: 'flex', position: 'relative', background: 'linear-gradient(rgba(220,220,220,0), rgba(0,0,0,0.9))', marginTop: '-5rem', color: 'white' }}>
-                                        <Avatar sx={{ bgcolor: 'red', marginRight: '0.5rem' }} aria-label="recipe">
-                                            R
-                                        </Avatar>
+                                            <Avatar sx={{ marginRight: '0.5rem' }} aria-label="recipe" src={card.user.profile_image.large}>
+                                                R
+                                            </Avatar>
                                         <Box sx={{ marginBottom: '-2rem' }}>
                                             <Typography variant="body2" >
                                                 {card && card.user.first_name} {card && card.user.last_name}
