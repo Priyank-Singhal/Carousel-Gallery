@@ -10,6 +10,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import json2mq from 'json2mq';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Error from '../components/Error'
 
 const theme = createTheme({
 });
@@ -21,6 +22,7 @@ const Gallery = () => {
     const [topic, setTopic] = useState();
     const [data, setData] = useState({})
     const [load, setLoad] = useState(true);
+    const [error, setError] = useState(false);
 
     const size = useMediaQuery(
         json2mq({
@@ -51,9 +53,13 @@ const Gallery = () => {
     useEffect(() => {
         axios.get('https://api.unsplash.com/search/photos?page=1&query=' + topic + '&client_id=6i3h31X3KB7XH4qqwfurMmq5TKuSgWJcgOKyfBzs1_0')
             .then(res => {
+                setError(false)
                 setData(res.data)
-                // console.log(res.data.results)
+                console.log(res.data.results)
                 setTimeout(() => setLoad(false), 1000);
+                if(!res.data.results.length){
+                    setError(true)
+                }
             })
             .catch(err => {
                 console.log('Error: ', err.message)
@@ -63,18 +69,19 @@ const Gallery = () => {
     return (
         <div className='gallery'>
             <ThemeProvider theme={theme}>
-                <Container component='main' maxWidth='md' sx={{ background: '', marginLeft: '5%' }}>
+                <Container component='main' maxWidth='md' sx={{ background: '', marginLeft: '0' }}>
                     <CssBaseline />
                     <Box
                         // maxWidth='lg'
                         sx={{
-                            marginTop: '15%',
+                            marginTop: '10%',
                             background: '',
                             display: `${size && 'flex'}`,
-                            width: '60vw'
+                            justifyContent: 'space-between',
+                            width: '90vw'
                         }}
                     >
-                        <Typography variant='h4' sx={{ fontSize: 42 }}>Gallery</Typography>
+                        <Typography variant='h4' sx={{ marginLeft: '2rem', fontSize: 42 }}>Gallery</Typography>
                         <div style={{ marginLeft: '2rem', border: '1px solid black', borderRadius: '8px', padding: '2px', display: 'flex' }}>
                             <div style={{ marginLeft: '5%' }}>
                                 <SearchIcon sx={{ marginTop: '45%' }} />
@@ -105,12 +112,7 @@ const Gallery = () => {
                         }}
                     >
                         <ImageDataContext.Provider value={{ data, load }}>
-                            {/* <Carousel> */}
-                            {/* <CarouselItem>Item 1</CarouselItem>
-                                <CarouselItem>Item 2</CarouselItem>
-                                <CarouselItem>Item 3</CarouselItem> */}
-                            {/* </Carousel> */}
-                            <Card />
+                            {error ? <Error /> : <Card />}
                         </ImageDataContext.Provider>
                     </Box>
                 </Container>

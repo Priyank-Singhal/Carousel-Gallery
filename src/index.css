@@ -15,17 +15,21 @@ code {
 
 .carousel {
   margin-right: auto;
+  margin-left: 0;
   overflow: hidden;
-  width: 80vw; 
+  width: 97vw; 
+  /* background: linear-gradient(to right, rgba(220,220,220,0), rgba(0,0,0,0.2)); */
+  /* background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); */
 }
-
+/* 
 .carousel::after {
-  background: linear-gradient(rgba(220,220,220,0), rgba(0,0,0,0.9));  
-}
+  background: linear-gradient(to left, rgba(220,220,220,0), rgba(0,0,0,0.9));
+} */
 
 .inner {
   white-space: nowrap;
-  transition: transform 0.3s;
+  /* transition: transform 0.3s; */
+  transition: ease all 0.5s;
 }
 
 .carousel-item {
@@ -43,7 +47,7 @@ code {
 
 .indicators {
   display: flex;
-  margin-top: 4rem;
+  margin-top: 3rem;
   justify-content: center;
 }
 
@@ -53,8 +57,4 @@ code {
   /* width: 2rem; */
 }
 
-.indicators>button.active {
-  background-color: green;
-  color: #fff;
-}
 

@@ -20,6 +20,8 @@ const Carousel = ({ children }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [paused, setPaused] = useState(false);
 
+    // console.log('ActiveIndex',activeIndex)
+
     const size = useMediaQuery(
         json2mq({
             minWidth: 900,
@@ -30,12 +32,11 @@ const Carousel = ({ children }) => {
 
     const updateIndex = (newIndex) => {
         if (newIndex < 0) {
-            newIndex = size ? 5 : 6;
-        } else if (newIndex >= 7) {
+            newIndex = size ? 4 : 5;
+            // newIndex = React.Children.count(children);
+        } else if (newIndex > (size ? 4  : 6)) {
             newIndex = 0;
         }
-        // console.log(React.Children.count(children))
-        // console.log(newIndex)
 
         setActiveIndex(newIndex);
     };
@@ -47,7 +48,7 @@ const Carousel = ({ children }) => {
             if (!paused) {
                 updateIndex(activeIndex + 1);
             }
-        }, 3000);
+        }, 2000);
 
         return () => {
             if (interval) {

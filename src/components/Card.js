@@ -13,7 +13,6 @@ import DownloadIcon from '@mui/icons-material/Download';
 import createTheme from '@mui/material/styles/createTheme';
 import Carousel, { CarouselItem } from '../components/Carousel';
 import Skeleton from '@mui/material/Skeleton';
-import { Stack } from '@mui/material';
 
 const darkTheme = createTheme({
     palette: {
